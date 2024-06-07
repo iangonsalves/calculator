@@ -3,9 +3,11 @@ let secondOperand = "";
 let currentOperation = "";
 let clickableButtons = true;
 let operatorPresent = false;
+let isCalculated = false;
 
 const currentCalculation = document.getElementById("current_calculation");
 const outputCalculation = document.getElementById("output_calculation");
+
 const btn0 = document.getElementById("btn_0");
 const btn1 = document.getElementById("btn_1");
 const btn2 = document.getElementById("btn_2");
@@ -26,22 +28,44 @@ const divBtn = document.getElementById("divide_button");
 const dotBtn = document.getElementById("dot_btn");
 const equalsBtn = document.getElementById("equals_btn");
 
+btn0.addEventListener("click", ()=> updateVariables(btn0.textContent));
+btn1.addEventListener("click", ()=> updateVariables(btn1.textContent));
+btn2.addEventListener("click", ()=> updateVariables(btn2.textContent));
+btn3.addEventListener("click", ()=> updateVariables(btn3.textContent));
+btn4.addEventListener("click", ()=> updateVariables(btn4.textContent));
+btn5.addEventListener("click", ()=> updateVariables(btn5.textContent));
+btn6.addEventListener("click", ()=> updateVariables(btn6.textContent));
+btn7.addEventListener("click", ()=> updateVariables(btn7.textContent));
+btn8.addEventListener("click", ()=> updateVariables(btn8.textContent));
+btn9.addEventListener("click", ()=> updateVariables(btn9.textContent));
 
+clrBtn.addEventListener("click", ()=> clearScreen());
+delBtn.addEventListener("click", ()=> deleteButton());
+dotBtn.addEventListener("click", ()=> updateVariables(dotBtn.textContent));
+plusBtn.addEventListener("click", ()=> updateOperators(plusBtn.textContent));
+minusBtn.addEventListener("click", ()=> updateOperators(minusBtn.textContent));
+multBtn.addEventListener("click", ()=> updateOperators("*"));
+divBtn.addEventListener("click", ()=> updateOperators(divBtn.textContent));
+equalsBtn.addEventListener("click", ()=> updateScreenValue());
 
 function addition(firstVariable = 0, secondVariable = 0){
-    return firstVariable + secondVariable;
+    let number = firstVariable + secondVariable;
+    return Math.round(number * 1000) / 1000;
 }
 
 function subtraction(firstVariable = 0, secondVariable = 0){
-    return firstVariable - secondVariable; 
+    let number = firstVariable - secondVariable;
+    return Math.round(number * 1000) / 1000;
 }
 
 function mutiplication(firstVariable = 0, secondVariable = 0){
-    return firstVariable * secondVariable;
+    let number = firstVariable * secondVariable
+    return Math.round(number * 1000) / 1000;
 }
 
 function division(firstVariable = 0,secondVariable = 1){
-    return firstVariable / secondVariable;   
+    let number = firstVariable / secondVariable;
+    return  Math.round(number * 1000) / 1000;  
 }
 
 function operate(firstVariable, operator, secondVariable){
@@ -64,28 +88,7 @@ function operate(firstVariable, operator, secondVariable){
     return result;
 }
 
-btn0.addEventListener("click", ()=> updateVariables(btn0.textContent));
-btn1.addEventListener("click", ()=> updateVariables(btn1.textContent));
-btn2.addEventListener("click", ()=> updateVariables(btn2.textContent));
-btn3.addEventListener("click", ()=> updateVariables(btn3.textContent));
-btn4.addEventListener("click", ()=> updateVariables(btn4.textContent));
-btn5.addEventListener("click", ()=> updateVariables(btn5.textContent));
-btn6.addEventListener("click", ()=> updateVariables(btn6.textContent));
-btn7.addEventListener("click", ()=> updateVariables(btn7.textContent));
-btn8.addEventListener("click", ()=> updateVariables(btn8.textContent));
-btn9.addEventListener("click", ()=> updateVariables(btn9.textContent));
-clrBtn.addEventListener("click", ()=> clearScreen());
-delBtn.addEventListener("click", ()=> deleteButton());
-// dotBtn.addEventListener("click", ()=> updateVariables(dotBtn.textContent));
-plusBtn.addEventListener("click", ()=> updateOperators(plusBtn.textContent));
-minusBtn.addEventListener("click", ()=> updateOperators(minusBtn.textContent));
-multBtn.addEventListener("click", ()=> updateOperators("*"));
-divBtn.addEventListener("click", ()=> updateOperators(divBtn.textContent));
-equalsBtn.addEventListener("click", ()=> updateScreenValue());
-
-
 function updateVariables(number = ""){
-    if(clickableButtons){
         if(firstOperand === "" || !operatorPresent){
             firstOperand += number;
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
@@ -103,21 +106,24 @@ function updateVariables(number = ""){
         console.log("Final First Value is " + firstOperand);
         console.log("Final Second Value is " + secondOperand);
         console.log("Current operation used is " + currentOperation);
-    }
 }
 
 function updateOperators(operator){
-    if(clickableButtons && currentOperation == ''){
-    currentOperation = operator;
-    operatorPresent = true;
-    updateVariables();
+
+    if(isCalculated){
+        setNextCalculation();
+    }
+
+    if(currentOperation == ''){
+        currentOperation = operator;
+        operatorPresent = true;
+        updateVariables();
     }
 }
 
 
 function updateScreenValue(){
-    clickableButtons = false;
-    let result = operate(firstOperand, currentOperation, secondOperand);
+    let result = operate(parseFloat(firstOperand), currentOperation, parseFloat(secondOperand));
     console.log(result);
     if (secondOperand === "0"){
         currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand} = `;
@@ -129,21 +135,33 @@ function updateScreenValue(){
         currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand} = `;
         outputCalculation.textContent = `${result}`;
     }
+    isCalculated = true;
 } 
 
-
-function clearScreen(){
-    firstOperand = "";
+function setNextCalculation(){
+    firstOperand = outputCalculation.textContent;
     secondOperand = "";
     currentOperation = "";
     clickableButtons = true;
     operatorPresent = false;
+    currentCalculation.textContent = firstOperand;
+    outputCalculation.textContent = "";
+    isCalculated = false
+}
+
+function clearScreen(){
+    firstOperand = ""
+    secondOperand = "";
+    currentOperation = "";
+    clickableButtons = true;
+    operatorPresent = false;
+    isCalculated = false;
     currentCalculation.textContent = "";
     outputCalculation.textContent = "";
 }
 
 function deleteButton(){
-    if(clickableButtons){
+    isCalculated = false;
         if (secondOperand != "") {
             secondOperand = secondOperand.slice(0,-1);
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
@@ -155,5 +173,4 @@ function deleteButton(){
             firstOperand = firstOperand.slice(0,-1);
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
         }
-    }
 }
