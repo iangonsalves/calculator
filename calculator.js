@@ -5,6 +5,7 @@ let clickableButtons = true;
 let operatorPresent = false;
 let isCalculated = false;
 
+//DOM contennt 
 const currentCalculation = document.getElementById("current_calculation");
 const outputCalculation = document.getElementById("output_calculation");
 
@@ -28,6 +29,7 @@ const divBtn = document.getElementById("divide_button");
 const dotBtn = document.getElementById("dot_btn");
 const equalsBtn = document.getElementById("equals_btn");
 
+//Event Listeners for calculations
 btn0.addEventListener("click", ()=> updateVariables(btn0.textContent));
 btn1.addEventListener("click", ()=> updateVariables(btn1.textContent));
 btn2.addEventListener("click", ()=> updateVariables(btn2.textContent));
@@ -48,26 +50,57 @@ multBtn.addEventListener("click", ()=> updateOperators("*"));
 divBtn.addEventListener("click", ()=> updateOperators(divBtn.textContent));
 equalsBtn.addEventListener("click", ()=> updateScreenValue());
 
+/**
+ * Adds two numbers together.
+ * @param {*} firstVariable 
+ * @param {*} secondVariable 
+ * @returns sum of two variables
+ */
 function addition(firstVariable = 0, secondVariable = 0){
     let number = firstVariable + secondVariable;
     return Math.round(number * 1000) / 1000;
 }
 
+/**
+ * Subtraction of two numbers.
+ * @param {*} firstVariable 
+ * @param {*} secondVariable 
+ * @returns subtracted value
+ */
 function subtraction(firstVariable = 0, secondVariable = 0){
     let number = firstVariable - secondVariable;
     return Math.round(number * 1000) / 1000;
 }
 
+/**
+ * Multiplies 2 numbers together.
+ * @param {*} firstVariable 
+ * @param {*} secondVariable 
+ * @returns multiplied value
+ */
 function mutiplication(firstVariable = 0, secondVariable = 0){
     let number = firstVariable * secondVariable
     return Math.round(number * 1000) / 1000;
 }
 
+/**
+ * Divides firstNumber over secondNumber
+ * @param {*} firstVariable 
+ * @param {*} secondVariable 
+ * @returns Divided result.
+ */
 function division(firstVariable = 0,secondVariable = 1){
     let number = firstVariable / secondVariable;
     return  Math.round(number * 1000) / 1000;  
 }
 
+/**
+ * Does an calculation based on the operand used.
+ * @param {*} firstVariable 
+ * @param {*} operator 
+ * @param {*} secondVariable 
+ * @returns result of operation
+ */
 function operate(firstVariable, operator, secondVariable){
 
     let result = 0;
@@ -88,6 +121,10 @@ function operate(firstVariable, operator, secondVariable){
     return result;
 }
 
+/**
+ * Udates all the varibales to be used globally and constants.
+ * @param {*} number 
+ */
 function updateVariables(number = ""){
         if(firstOperand === "" || !operatorPresent){
             firstOperand += number;
@@ -108,6 +145,10 @@ function updateVariables(number = ""){
         console.log("Current operation used is " + currentOperation);
 }
 
+/**
+ * Updates the hlobal operator based on certain conditions.
+ * @param {*} operator 
+ */
 function updateOperators(operator){
 
     if(isCalculated){
@@ -121,7 +162,10 @@ function updateOperators(operator){
     }
 }
 
-
+/**
+ * Updates the screenValue on the calculator based 
+ * on calculations and result present.
+ */
 function updateScreenValue(){
     let result = operate(parseFloat(firstOperand), currentOperation, parseFloat(secondOperand));
     console.log(result);
@@ -138,6 +182,10 @@ function updateScreenValue(){
     isCalculated = true;
 } 
 
+/**
+ * Used for setting the global varaibles and constants based
+ * on one calculation being done.
+ */
 function setNextCalculation(){
     firstOperand = outputCalculation.textContent;
     secondOperand = "";
@@ -149,6 +197,9 @@ function setNextCalculation(){
     isCalculated = false
 }
 
+/**
+ * Used to reset all global variables and constants
+ */
 function clearScreen(){
     firstOperand = ""
     secondOperand = "";
@@ -160,6 +211,10 @@ function clearScreen(){
     outputCalculation.textContent = "";
 }
 
+/**
+ * Used ot delete values on screen.
+ * Used  as a backspace.
+ */
 function deleteButton(){
     isCalculated = false;
         if (secondOperand != "") {
