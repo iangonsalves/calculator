@@ -127,6 +127,7 @@ function operate(firstVariable, operator, secondVariable){
  */
 function updateVariables(number = ""){
         if(firstOperand === "" || !operatorPresent){
+            if(firstOperand.includes(".") && number === ".") return;
             firstOperand += number;
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
         // console.log("First value is " + firstOperand);
@@ -135,6 +136,7 @@ function updateVariables(number = ""){
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
         } else {
             // currentCalculation.textContent=0;
+            if(secondOperand.includes(".") && number === ".") return;
             secondOperand += number;
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
         // console.log("Second value is " + firstOperand);

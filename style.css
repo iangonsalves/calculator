@@ -41,32 +41,40 @@ body{
 }
 
 #screen{
+    display: flex;
+    flex-direction: column;
     border-radius: 5px;
     box-shadow: -2px 2px 8px black;
     width: 575px;
     border: 4px solid black;
-    height: 70px;
-    font-size: 25px;
+    height: 72px;
     background-color: rgba(245, 245, 245, 0.71);
     margin-bottom:20px ;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     font-size: 30px;
-    font-family:Impact, 'Arial Narrow Bold', sans-serif;
+    font-family:"Orbitron", sans-serif;
+    font-weight: bolder;
 }
 
 #current_calculation, #output_calculation {
+    overflow: hidden ;
+    word-wrap: break-word;
     width: 100%;
     display: flex;
 }
 
 #current_calculation{
     justify-content: left;
+    height: 50%;
+    border: 2px  solid orange;
+
 }
 
 #output_calculation{
-  justify-content: right;
+    justify-content: right;
+    height: 50%;
+    border: 2px  solid blue;
+
 }
 
 .button_interface{
@@ -101,6 +109,7 @@ body{
 
 button{
     flex: 1;
+    font-family:"Orbitron", sans-serif;
     font-size: 30px;
     font-weight: bolder;
     text-shadow: -1px 1px 1.5px black; 
@@ -135,6 +144,7 @@ button:hover {
 }
 
 button:active {
-
+    transform: scale(0.9);
+    background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
     color: white;
 }
