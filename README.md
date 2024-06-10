@@ -1,5 +1,5 @@
 # Calculator
-A Virtual Calcualtor to suffice all your basic methematical needs.
+A Virtual Calculator to suffice all your basic mathematical needs.
 
 ## How to access:
 Open the **index.html** file on your browser of choice. 
@@ -8,7 +8,7 @@ Open the **index.html** file on your browser of choice.
 
 - Addition, subtraction, multiplication, and division.
 - Clear display functionality.
-- Decimal calculations inlcuded.
+- Decimal calculations included.
 
 ## Technologies Used
 - HTML
