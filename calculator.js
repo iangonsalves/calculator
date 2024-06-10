@@ -5,7 +5,7 @@ let clickableButtons = true;
 let operatorPresent = false;
 let isCalculated = false;
 
-//DOM contennt 
+//DOM contennt
 const currentCalculation = document.getElementById("current_calculation");
 const outputCalculation = document.getElementById("output_calculation");
 
@@ -50,6 +50,16 @@ multBtn.addEventListener("click", ()=> updateOperators("*"));
 divBtn.addEventListener("click", ()=> updateOperators(divBtn.textContent));
 equalsBtn.addEventListener("click", ()=> updateScreenValue());
 
+//Keyboard Functionality.
+window.addEventListener('keydown', function (event) {
+    if (event.key >= 0 && event.key <= 9) updateVariables(event.key);
+    if (event.key === '.') updateVariables(event.key);
+    if (event.key === '=' || event.key === 'Enter') updateScreenValue();
+    if (event.key === 'Backspace') deleteButton();
+    if (event.key === 'Escape') clearScreen();
+    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') updateOperators(event.key);
+  });
+
 /**
  * Adds two numbers together.
  * @param {*} firstVariable 
@@ -57,8 +67,7 @@ equalsBtn.addEventListener("click", ()=> updateScreenValue());
  * @returns sum of two variables
  */
 function addition(firstVariable = 0, secondVariable = 0){
-    let number = firstVariable + secondVariable;
-    return Math.round(number * 1000) / 1000;
+    return Math.round((firstVariable + secondVariable) * 1000) / 1000;
 }
 
 /**
@@ -68,8 +77,7 @@ function addition(firstVariable = 0, secondVariable = 0){
  * @returns subtracted value
  */
 function subtraction(firstVariable = 0, secondVariable = 0){
-    let number = firstVariable - secondVariable;
-    return Math.round(number * 1000) / 1000;
+    return Math.round((firstVariable - secondVariable) * 1000) / 1000;
 }
 
 /**
@@ -79,8 +87,7 @@ function subtraction(firstVariable = 0, secondVariable = 0){
  * @returns multiplied value
  */
 function mutiplication(firstVariable = 0, secondVariable = 0){
-    let number = firstVariable * secondVariable
-    return Math.round(number * 1000) / 1000;
+    return Math.round((firstVariable * secondVariable) * 1000) / 1000;
 }
 
 /**
@@ -90,8 +97,7 @@ function mutiplication(firstVariable = 0, secondVariable = 0){
  * @returns Divided result.
  */
 function division(firstVariable = 0,secondVariable = 1){
-    let number = firstVariable / secondVariable;
-    return  Math.round(number * 1000) / 1000;  
+    return  Math.round((firstVariable / secondVariable) * 1000) / 1000;  
 }
 
 /**
@@ -102,8 +108,8 @@ function division(firstVariable = 0,secondVariable = 1){
  * @returns result of operation
  */
 function operate(firstVariable, operator, secondVariable){
-
     let result = 0;
+    
     switch(operator){
         case "+":
             result = addition(firstVariable,secondVariable);
@@ -130,28 +136,21 @@ function updateVariables(number = ""){
             if(firstOperand.includes(".") && number === ".") return;
             firstOperand += number;
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
-        // console.log("First value is " + firstOperand);
-        // console.log("screen value is: " + screenValue.textContent);
         } else if (!operatorPresent){
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
         } else {
-            // currentCalculation.textContent=0;
             if(secondOperand.includes(".") && number === ".") return;
             secondOperand += number;
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;
-        // console.log("Second value is " + firstOperand);
-        // console.log("screen value is: " + screenValue.textContent);
         }
-        console.log("Final First Value is " + firstOperand);
-        console.log("Final Second Value is " + secondOperand);
-        console.log("Current operation used is " + currentOperation);
 }
 
 /**
- * Updates the hlobal operator based on certain conditions.
+ * Updates the global operator based on certain conditions.
  * @param {*} operator 
  */
 function updateOperators(operator){
+    console.log("current key pressed is" + operator);
 
     if(isCalculated){
         setNextCalculation();
@@ -170,7 +169,7 @@ function updateOperators(operator){
  */
 function updateScreenValue(){
     let result = operate(parseFloat(firstOperand), currentOperation, parseFloat(secondOperand));
-    console.log(result);
+
     if (secondOperand === "0"){
         currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand} = `;
         outputCalculation.textContent = 'ERROR';
@@ -219,6 +218,7 @@ function clearScreen(){
  */
 function deleteButton(){
     isCalculated = false;
+
         if (secondOperand != "") {
             secondOperand = secondOperand.slice(0,-1);
             currentCalculation.textContent = `${firstOperand} ${currentOperation} ${secondOperand}`;

@@ -11,3 +11,7 @@ A Virtual Calcualtor to suffice all your basic methematical needs.
 - HTML
 - CSS
 - JavaScript
+
+## Example Look:
+
+![Calculator](/images/calculator_example.png)

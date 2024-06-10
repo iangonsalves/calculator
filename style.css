@@ -57,8 +57,8 @@ body{
 }
 
 #current_calculation, #output_calculation {
-    overflow: hidden ;
-    word-wrap: break-word;
+    overflow: auto ;
+    white-space: nowrap;
     width: 100%;
     display: flex;
 }
@@ -66,15 +66,11 @@ body{
 #current_calculation{
     justify-content: left;
     height: 50%;
-    border: 2px  solid orange;
-
 }
 
 #output_calculation{
     justify-content: right;
     height: 50%;
-    border: 2px  solid blue;
-
 }
 
 .button_interface{
@@ -130,8 +126,12 @@ button{
 }
 
 
-#plus_btn, #multiplication_btn, #minus_btn, #divide_button, #dot_btn, #equals_btn{
+#plus_btn, #multiplication_btn, #minus_btn, #divide_button, #dot_btn{
     background-color: rgb(223, 146, 5);
+}
+
+#equals_btn{
+    background-color: rgb(219, 219, 22);
 }
 
 #btn_0, #btn_1, #btn_2, #btn_3, #btn_4, #btn_5, #btn_6, #btn_7, #btn_8, #btn_9{
